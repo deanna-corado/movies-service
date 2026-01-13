@@ -6,6 +6,7 @@ import (
 	"go-gin-mysql/repositories"
 	"go-gin-mysql/routes"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -27,8 +28,15 @@ func main() {
 
 	routes.RegisterRoutes(r, movieController)
 
-	r.Run(":8080")
-	if err := r.Run(":8080"); err != nil {
+	port := os.Getenv("PORT")
+	
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Println("Server running on port", port)
+
+	if err := r.Run(":" + port); err != nil {
 		log.Fatal(err)
 	}
 
