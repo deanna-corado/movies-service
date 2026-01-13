@@ -11,10 +11,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// FIX BY GROUP; UNDESTAND MORE
 func RegisterRoutes(
 	r *gin.Engine,
 	movieController *controllers.MovieController,
 ) {
 	r.GET("/movies", movieController.GetMovies)
-
+	r.GET("/movies/:id", movieController.GetMovieByID)
+	r.POST("/movies", movieController.AddMovie)
+	r.PUT("/movies/:id", movieController.UpdateMovie)
+	r.DELETE("/movies/:id", movieController.DeleteMovie)
 }
