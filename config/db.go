@@ -8,16 +8,12 @@ import (
 	"os"
 
 	"github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
-
+//dito ba talaga to
 var DB *sql.DB
 
 func ConnectDB() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
 
 	cfg := mysql.NewConfig()
 	cfg.User = os.Getenv("DBUSER")
@@ -25,7 +21,7 @@ func ConnectDB() {
 	cfg.Net = os.Getenv("DBNET")
 	cfg.Addr = os.Getenv("DBADDRESS")
 	cfg.DBName = os.Getenv("DBNAME")
-
+	var err error
 	DB, err = sql.Open("mysql", cfg.FormatDSN())
 	if err != nil {
 		log.Fatal(err)
