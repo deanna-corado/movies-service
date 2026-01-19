@@ -2,12 +2,12 @@
 package controllers
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
 	"go-gin-mysql/models"
 	"go-gin-mysql/services"
+	"go-gin-mysql/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -34,7 +34,7 @@ func (c *MovieController) GetMovies(ctx *gin.Context) {
 
 func (c *MovieController) GetMovieByID(ctx *gin.Context) {
 
-	//check if number (since id sya)
+	
 	idParam := ctx.Param("id")
 	id, err := strconv.Atoi(idParam)
 
@@ -46,16 +46,7 @@ func (c *MovieController) GetMovieByID(ctx *gin.Context) {
 	movie, err := c.service.GetMovieByID(id)
 	if err != nil {
 
-		switch {
-		case errors.Is(err, services.ErrInvalidMovieID):
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		case errors.Is(err, services.ErrMovieNotFound):
-			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-
-		default:
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
+		utils.HandleMovieError(ctx, err)
 		return
 	}
 	ctx.JSON(http.StatusOK, movie)
@@ -72,9 +63,7 @@ func (c *MovieController) AddMovie(ctx *gin.Context) {
 	}
 
 	if err := c.service.AddMovie(&movie); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": err.Error(),
-		})
+		utils.HandleMovieError(ctx, err)
 		return
 	}
 
@@ -95,17 +84,7 @@ func (c *MovieController) UpdateMovie(ctx *gin.Context) {
 	}
 
 	if err := c.service.UpdateMovie(id, &movie); err != nil {
-		switch {
-		case errors.Is(err, services.ErrInvalidMovieID),
-			errors.Is(err, services.ErrMissingMovieData):
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		case errors.Is(err, services.ErrMovieNotFound):
-			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-
-		default:
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
+		utils.HandleMovieError(ctx, err)
 		return
 	}
 
@@ -119,16 +98,7 @@ func (c *MovieController) DeleteMovie(ctx *gin.Context) {
 	}
 
 	if err := c.service.DeleteMovie(id); err != nil {
-		switch {
-		case errors.Is(err, services.ErrInvalidMovieID):
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-
-		case errors.Is(err, services.ErrMovieNotFound):
-			ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
-
-		default:
-			ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		}
+		utils.HandleMovieError(ctx, err)
 		return
 	}
 

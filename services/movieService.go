@@ -5,9 +5,10 @@ import (
 	"errors"
 	"go-gin-mysql/models"
 	"go-gin-mysql/repositories"
+
+	"gorm.io/gorm"
 )
 
-// i think ito yung ililipat sa utils
 var ErrMovieNotFound = errors.New("Movie not found")
 var ErrInvalidMovieID = errors.New("Invalid movie ID")
 var ErrMissingMovieData = errors.New("Movie must include title and director")
@@ -34,7 +35,7 @@ func (s *MovieService) GetMovieByID(id int) (*models.Movie, error) {
 
 	movie, err := s.repo.GetMovieByID(id)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, ErrMovieNotFound
 		}
 		return nil, err
@@ -60,7 +61,6 @@ func (s *MovieService) UpdateMovie(id int, movie *models.Movie) error {
 		return ErrMissingMovieData
 	}
 
-	// check existence only
 	_, err := s.repo.GetMovieByID(id)
 	if err != nil {
 		if err == sql.ErrNoRows {
@@ -80,7 +80,7 @@ func (s *MovieService) DeleteMovie(id int) error {
 
 	err := s.repo.DeleteMovie(id)
 	if err != nil {
-		if err == sql.ErrNoRows {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return ErrMovieNotFound
 		}
 		return err

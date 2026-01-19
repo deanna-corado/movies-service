@@ -6,7 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-// medyo lito pa dito
 type MovieRepository struct {
 	db *gorm.DB
 }
