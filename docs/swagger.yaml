@@ -8,6 +8,8 @@ definitions:
         type: integer
       title:
         type: string
+      year:
+        type: integer
     type: object
 host: localhost:8080
 info:

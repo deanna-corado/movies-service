@@ -329,6 +329,9 @@ const docTemplate = `{
                 },
                 "title": {
                     "type": "string"
+                },
+                "year": {
+                    "type": "integer"
                 }
             }
         }
