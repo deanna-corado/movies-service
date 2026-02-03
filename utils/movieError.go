@@ -3,7 +3,7 @@ package utils
 import (
 	"errors"
 
-	"go-gin-mysql/services"
+	"movies-service/services"
 
 	"github.com/gin-gonic/gin"
 )

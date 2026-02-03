@@ -24,4 +24,4 @@ swag init
 
 # swagger url
 
-http://localhost:8080/docs/index.html
+http://localhost:5002/docs/index.html

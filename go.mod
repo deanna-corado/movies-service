@@ -1,4 +1,4 @@
-module go-gin-mysql
+module movies-service
 
 go 1.25.5
 

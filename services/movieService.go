@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
-	"go-gin-mysql/models"
-	"go-gin-mysql/repositories"
+	"movies-service/models"
+	"movies-service/repositories"
 
 	"gorm.io/gorm"
 )

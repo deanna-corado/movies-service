@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"go-gin-mysql/models"
+	"movies-service/models"
 
 	"gorm.io/gorm"
 )

@@ -11,7 +11,7 @@ definitions:
       year:
         type: integer
     type: object
-host: localhost:8080
+host: localhost:5002
 info:
   contact: {}
   description: Server for managing movies

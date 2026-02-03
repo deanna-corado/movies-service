@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"go-gin-mysql/models"
-	"go-gin-mysql/services"
-	"go-gin-mysql/utils"
+	"movies-service/models"
+	"movies-service/services"
+	"movies-service/utils"
 
 	"github.com/gin-gonic/gin"
 )

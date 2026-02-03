@@ -1,7 +1,7 @@
 package migrations
 
 import (
-	"go-gin-mysql/models"
+	"movies-service/models"
 
 	gormigrate "github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/gorm"

@@ -2,8 +2,7 @@
 package routes
 
 import (
-	"go-gin-mysql/controllers"
-	"go-gin-mysql/middlewares"
+	"movies-service/controllers"
 
 	"github.com/gin-gonic/gin"
 
@@ -16,7 +15,6 @@ func RegisterRoutes(
 	movieController *controllers.MovieController,
 ) {
 
-	
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(
 		swaggerFiles.Handler,
 	))
@@ -29,13 +27,17 @@ func RegisterRoutes(
 	{
 		movies.GET("", movieController.GetMovies)
 		movies.GET("/:id", movieController.GetMovieByID)
+		movies.POST("", movieController.AddMovie)
+		movies.PUT("/:id", movieController.UpdateMovie)
+		movies.DELETE("/:id", movieController.DeleteMovie)
 	}
 
 	//PRIVATE ROUTES (ADMIN ACCESS)
-	adminMovies := v1.Group("/admin/movies", middlewares.AuthRequired())
-	{
-		adminMovies.POST("", movieController.AddMovie)
-		adminMovies.PUT("/:id", movieController.UpdateMovie)
-		adminMovies.DELETE("/:id", movieController.DeleteMovie)
-	}
+	// 	adminMovies := v1.Group("/admin/movies", middlewares.AuthRequired())
+	// 	{
+	// 		adminMovies.POST("", movieController.AddMovie)
+	// 		adminMovies.PUT("/:id", movieController.UpdateMovie)
+	// 		adminMovies.DELETE("/:id", movieController.DeleteMovie)
+	// 	}
+	// }
 }

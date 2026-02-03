@@ -1,14 +1,14 @@
 package main
 
 import (
-	"go-gin-mysql/config"
-	"go-gin-mysql/controllers"
-	_ "go-gin-mysql/docs"
-	"go-gin-mysql/migrations"
-	"go-gin-mysql/repositories"
-	"go-gin-mysql/routes"
-	"go-gin-mysql/services"
 	"log"
+	"movies-service/config"
+	"movies-service/controllers"
+	_ "movies-service/docs"
+	"movies-service/migrations"
+	"movies-service/repositories"
+	"movies-service/routes"
+	"movies-service/services"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +19,7 @@ import (
 // @title Movies API
 // @version 1.0
 // @description Server for managing movies
-// @host localhost:8080
+// @host localhost:5002
 // @BasePath /api/v1
 // @securityDefinitions.basic BasicAuth
 
@@ -65,7 +65,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "8080"
+		port = "5002"
 	}
 
 	log.Println("Server running on port", port)
