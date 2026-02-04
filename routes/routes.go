@@ -3,6 +3,7 @@ package routes
 
 import (
 	"movies-service/controllers"
+	"movies-service/middlewares"
 
 	"github.com/gin-gonic/gin"
 
@@ -12,7 +13,7 @@ import (
 
 func RegisterRoutes(
 	r *gin.Engine,
-	movieController *controllers.MovieController,
+	movieController *controllers.MovieController, credController *controllers.CredentialController,
 ) {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(
@@ -22,8 +23,7 @@ func RegisterRoutes(
 	//for api versioning
 	v1 := r.Group("/api/v1")
 
-	//PUBLIC ROUTES
-	movies := v1.Group("/movies")
+	movies := v1.Group("/movies", middlewares.ClientCredentialAuth())
 	{
 		movies.GET("", movieController.GetMovies)
 		movies.GET("/:id", movieController.GetMovieByID)
@@ -32,12 +32,5 @@ func RegisterRoutes(
 		movies.DELETE("/:id", movieController.DeleteMovie)
 	}
 
-	//PRIVATE ROUTES (ADMIN ACCESS)
-	// 	adminMovies := v1.Group("/admin/movies", middlewares.AuthRequired())
-	// 	{
-	// 		adminMovies.POST("", movieController.AddMovie)
-	// 		adminMovies.PUT("/:id", movieController.UpdateMovie)
-	// 		adminMovies.DELETE("/:id", movieController.DeleteMovie)
-	// 	}
-	// }
+	v1.POST("/credentials/validate", credController.Validate)
 }

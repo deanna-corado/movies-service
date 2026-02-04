@@ -50,7 +50,7 @@ func main() {
 
 	//ROLLBACK SPECIFIC MIGRATION
 
-	// if err := m.RollbackTo("00002_create_year_column"); err != nil {
+	// if err := m.RollbackTo("00003_createCredentialTable"); err != nil {
 	// 	log.Fatal(err)
 	// }
 
@@ -59,8 +59,9 @@ func main() {
 	movieRepo := repositories.NewMovieRepository(config.DB)
 	movieService := services.NewMovieService(movieRepo)
 	movieController := controllers.NewMovieController(movieService)
+	credController := controllers.NewCredentialController(config.DB)
 
-	routes.RegisterRoutes(r, movieController)
+	routes.RegisterRoutes(r, movieController, credController)
 
 	port := os.Getenv("PORT")
 
