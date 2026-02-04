@@ -41,6 +41,7 @@ func (cc *CredentialController) Validate(c *gin.Context) {
 		return
 	}
 
+	//placeholder
 	token := body.ClientID + "-token"
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
