@@ -59,9 +59,8 @@ func main() {
 	movieRepo := repositories.NewMovieRepository(config.DB)
 	movieService := services.NewMovieService(movieRepo)
 	movieController := controllers.NewMovieController(movieService)
-	credController := controllers.NewCredentialController(config.DB)
 
-	routes.RegisterRoutes(r, movieController, credController)
+	routes.RegisterRoutes(r, movieController)
 
 	port := os.Getenv("PORT")
 

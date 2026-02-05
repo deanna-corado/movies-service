@@ -13,8 +13,7 @@ import (
 
 func RegisterRoutes(
 	r *gin.Engine,
-	movieController *controllers.MovieController, credController *controllers.CredentialController,
-) {
+	movieController *controllers.MovieController) {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(
 		swaggerFiles.Handler,
@@ -23,7 +22,7 @@ func RegisterRoutes(
 	//for api versioning
 	v1 := r.Group("/api/v1")
 
-	movies := v1.Group("/movies", middlewares.ClientCredentialAuth())
+	movies := v1.Group("/movies", middlewares.AuthRequired())
 	{
 		movies.GET("", movieController.GetMovies)
 		movies.GET("/:id", movieController.GetMovieByID)
@@ -32,5 +31,4 @@ func RegisterRoutes(
 		movies.DELETE("/:id", movieController.DeleteMovie)
 	}
 
-	v1.POST("/credentials/validate", credController.Validate)
 }

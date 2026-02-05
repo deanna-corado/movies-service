@@ -64,4 +64,7 @@ require (
 	google.golang.org/protobuf v1.36.11 // indirect
 )
 
-require github.com/go-gormigrate/gormigrate/v2 v2.1.5
+require (
+	github.com/go-gormigrate/gormigrate/v2 v2.1.5
+	github.com/golang-jwt/jwt/v5 v5.3.1
+)
